@@ -5,6 +5,8 @@ window.addEventListener('load', ()=> {
   let temperatureDescription = document.querySelector('.temperature-description');
   let temperatureDegree = document.querySelector('.temperature-degree');
   let locationTimezone = document.querySelector('.location-timezone');
+  let degreeSection = document.querySelector('.degree-section');
+  let degreeSpan = document.querySelector('.degree-section span');
 
 
 
@@ -23,14 +25,36 @@ window.addEventListener('load', ()=> {
         })
         .then(data => {
           console.log(data);
-          const {temperature, summary} = data.currently;
+          const {temperature, summary, icon} = data.currently;
 
           temperatureDegree.textContent = temperature;
           temperatureDescription.textContent = summary;
           locationTimezone.textContent = data.timezone;
+          setIcons(icon, document.querySelector(".icon"));
+
+          let celsius = (temperature - 32) * (5/9);
+
+          degreeSection.addEventListener('click', () => {
+            if(degreeSpan.textContent === "F"){
+              degreeSpan.textContent = "C";
+              temperatureDegree.textContent = celsius;
+            } else {
+              degreeSpan.textContent = "F";
+              temperatureDegree.textContent = temperature;
+            }
+          });
+
         })
     });
   } else {
     h1.textContent = "Please give access to location to see weather";
+  }
+
+
+  function setIcons (icon, iconID) {
+    const skycons = new Skycons({color: "white"});
+    const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+    skycons.play();
+    return skycons.set(iconID, Skycons[currentIcon]);
   }
 });
