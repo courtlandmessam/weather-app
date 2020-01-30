@@ -41,3 +41,21 @@ body {
 .degree-section h2 {
   font-size: 40px;
 }
+
+.temperature-description {
+  font-size: 20px;
+}
+
+
+
+@media (max-width: 1050px) {
+  .location {
+    flex-direction: column;
+  }
+
+  .location-timezone {
+    text-align: center;
+    margin-top: -45px;
+    margin-bottom: 45px;
+  }
+}
